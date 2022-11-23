@@ -38,14 +38,14 @@ class App extends Level {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    compareUserInput(userNumber) {
+    compareUserInput(usernumberInput) {
         let currQuestion = this.state.question,
             mainLevel = this.state.level.main,
             subLevel = this.state.level.sub,
             wrong = this.state.wrong,
             digit;
 
-        if (userNumber === currQuestion) {
+        if (usernumberInput === currQuestion) {
             if (subLevel < 3) {
                 ++subLevel;
             } else if (subLevel === 3) {
@@ -69,12 +69,12 @@ class App extends Level {
     render() {
         return /*#__PURE__*/(
             React.createElement("div", {className: "main__app"}, /*#__PURE__*/
-                React.createElement(GenNumber, {
+                React.createElement(GenNumberInput, {
                     question: this.state.question,
                     level: this.state.level,
                     wrong: this.state.wrong
                 }), /*#__PURE__*/
-                React.createElement(InputNumber, {
+                React.createElement(InputnumberInput, {
                     compareUserInput: this.compareUserInput,
                     wrong: this.state.wrong,
                     onReset: this.resetState
@@ -83,7 +83,7 @@ class App extends Level {
     }
 }
 
-class GenNumber extends App {
+class GenNumberInput extends App {
 
     componentDidUpdate() {
 
@@ -95,29 +95,29 @@ class GenNumber extends App {
 
         time = (110 * Math.min(digit, 5) + 400 * Math.max(digit - 5, 0)) * a;
 
-        let number = document.getElementById('number');
+        let numberInput = document.getElementById('numberInput');
         setTimeout(function () {
-            number.innerHTML = number.innerHTML.replace(/\w/gi, '&#183;');
+            numberInput.innerHTML = numberInput.innerHTML.replace(/\w/gi, '&#183;');
         }, time);
     }
 
     componentDidMount() {
-        let number = document.getElementById('number');
+        let numberInput = document.getElementById('numberInput');
         setTimeout(function () {
-            number.innerHTML = number.innerHTML.replace(/\w|\W/gi, '&#183;');
+            numberInput.innerHTML = numberInput.innerHTML.replace(/\w|\W/gi, '&#183;');
         }, 1200);
     }
 
     render() {
         return /*#__PURE__*/(
-            React.createElement("div", {className: "app__gen-number"}, /*#__PURE__*/
+            React.createElement("div", {className: "app__gen-numberInput"}, /*#__PURE__*/
                 React.createElement("div", {className: "app__info"}, /*#__PURE__*/
                     React.createElement("p", {className: "app__level"}, "Уровень: ", this.props.level.main, " - ", this.props.level.sub), /*#__PURE__*/
                     React.createElement("p", {className: "app__wrong"}, "Ошибки: ", this.props.wrong, "/3")), /*#__PURE__*/
                 /*#__PURE__*/
                 React.createElement("p", {
-                    className: "app__number",
-                    id: "number"
+                    className: "app__numberInput",
+                    id: "numberInput"
                 }, this.props.wrong < 3 ? atob(this.props.question) : '????'), /*#__PURE__*/
             ));
 
@@ -126,7 +126,7 @@ class GenNumber extends App {
 }
 
 
-class InputNumber extends App {
+class InputnumberInput extends App {
     constructor() {
         super();
         this.handleUserInput = this.handleUserInput.bind(this);
@@ -136,9 +136,9 @@ class InputNumber extends App {
 
     handleUserInput(e) {
         e.preventDefault();
-        let userNumber = btoa(this.userNumber.value);
-        this.userNumber.value = "";
-        this.props.compareUserInput(userNumber);
+        let usernumberInput = btoa(this.usernumberInput.value);
+        this.usernumberInput.value = "";
+        this.props.compareUserInput(usernumberInput);
     }
 
     handleReset() {
@@ -153,8 +153,8 @@ class InputNumber extends App {
 
                     React.createElement("input", {
                         pattern: "[0-9]+",
-                        type: "number",
-                        ref: ref => this.userNumber = ref,
+                        type: "numberInput",
+                        ref: ref => this.usernumberInput = ref,
                         required: true,
                         autoFocus: true
                     }), /*#__PURE__*/
