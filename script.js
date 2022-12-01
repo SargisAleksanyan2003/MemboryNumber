@@ -1,5 +1,5 @@
 let a;
-
+//Уровни сложности
 class Level extends React.Component {
     chooseLev(b) {
         a = b;
@@ -8,7 +8,7 @@ class Level extends React.Component {
         ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
     }
 }
-
+//Переход на новый уровень
 class App extends Level {
     constructor() {
         super();
@@ -62,7 +62,6 @@ class App extends Level {
             level: {main: mainLevel, sub: subLevel},
             wrong: wrong
         });
-//		console.log( this.state.level)
 
     }
 
@@ -82,7 +81,7 @@ class App extends Level {
 
     }
 }
-
+//Генерация рандомного числа
 class GenNumberInput extends App {
 
     componentDidUpdate() {
@@ -125,7 +124,7 @@ class GenNumberInput extends App {
     }
 }
 
-
+//Ввод числа
 class InputnumberInput extends App {
     constructor() {
         super();
@@ -144,7 +143,7 @@ class InputnumberInput extends App {
     handleReset() {
         this.props.onReset();
     }
-
+//Проверка числа
     render() {
         let layout;
         if (this.props.wrong < 3) {
@@ -172,5 +171,5 @@ class InputnumberInput extends App {
     }
 }
 
-
+//создания игры
 var lev = new Level();
