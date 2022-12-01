@@ -3,6 +3,7 @@ let a;
 class Level extends React.Component {
     chooseLev(b) {
         a = b;
+		  //показ меню для выбора уровня 
         document.querySelector('.btn__select').style.display = 'none';
         document.querySelector('.content').style.display = 'block';
         ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
@@ -17,6 +18,7 @@ class App extends Level {
         this.resetState = this.resetState.bind(this);
         this.state = {
             question: btoa(this.randomGenerate(2)),
+				//начальный уровень
             level: {main: 1, sub: 1},
             wrong: 0
         };
@@ -25,6 +27,7 @@ class App extends Level {
     resetState() {
         this.setState({
             question: btoa(this.randomGenerate(2)),
+				//Рестарт
             level: {main: 1, sub: 1},
             wrong: 0
         });
@@ -34,7 +37,7 @@ class App extends Level {
     randomGenerate(digit) {
         let max = Math.pow(10, digit) - 1,
             min = Math.pow(10, digit - 1);
-
+			//рандомное число
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
@@ -47,8 +50,11 @@ class App extends Level {
 
         if (usernumberInput === currQuestion) {
             if (subLevel < 3) {
+					//следующий подуровень
+
                 ++subLevel;
             } else if (subLevel === 3) {
+					//следующий уровень
                 ++mainLevel;
                 subLevel = 1;
             }
@@ -91,11 +97,12 @@ class GenNumberInput extends App {
 
             digit = this.props.level.main + 2;
 
-
+		//рассчет времени показа чисел
         time = (110 * Math.min(digit, 5) + 400 * Math.max(digit - 5, 0)) * a;
 
         let numberInput = document.getElementById('numberInput');
         setTimeout(function () {
+				//ввод числа
             numberInput.innerHTML = numberInput.innerHTML.replace(/\w/gi, '&#183;');
         }, time);
     }
@@ -103,6 +110,7 @@ class GenNumberInput extends App {
     componentDidMount() {
         let numberInput = document.getElementById('numberInput');
         setTimeout(function () {
+				//скрывает число
             numberInput.innerHTML = numberInput.innerHTML.replace(/\w|\W/gi, '&#183;');
         }, 1200);
     }
@@ -132,7 +140,7 @@ class InputnumberInput extends App {
         this.handleReset = this.handleReset.bind(this);
 
     }
-
+	 //проверка числа
     handleUserInput(e) {
         e.preventDefault();
         let usernumberInput = btoa(this.usernumberInput.value);
@@ -143,7 +151,7 @@ class InputnumberInput extends App {
     handleReset() {
         this.props.onReset();
     }
-//Проверка числа
+//Проверка количество ошибок
     render() {
         let layout;
         if (this.props.wrong < 3) {
@@ -159,7 +167,7 @@ class InputnumberInput extends App {
                     }), /*#__PURE__*/
                     React.createElement("br", null), /*#__PURE__*/
                     React.createElement("br", null)), /*#__PURE__*/
-
+						//актвировать кнопку повторить
                 React.createElement("button", {onClick: this.handleReset}, "Повторить"));
 
         } else {
